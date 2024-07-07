@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
-    - name: Build the Exabgp Docker image
+    - name: Build and push the Exabgp Docker image
       with:
           image: chpradeep23/exabgp-rt
           registry: docker.io
