@@ -1,0 +1,31 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+    - name: Build the Exabgp Docker image
+      with:
+          image: chpradeep23/exabgp-rt
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: latest, $(date +%F)
+
+    - name: sync desc and readme
+      uses: meeDamian/sync-readme@v1.0.6
+      with:
+        user: ${{secrets.DOCKER_USER }}
+        pass: ${{ secrets.DOCKER_PASSWORD }}
