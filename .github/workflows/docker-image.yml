@@ -15,14 +15,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: mr-smithers-excellent/docker-build-push@v6
     - name: Build and push the Exabgp Docker image
       with:
-          image: chpradeep23/exabgp-rt
-          registry: docker.io
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tags: latest, $(date +%F)
+        image: chpradeep23/exabgp-rt
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tags: latest, $(date +%F)
 
     - name: sync desc and readme
       uses: meeDamian/sync-readme@v1.0.6
