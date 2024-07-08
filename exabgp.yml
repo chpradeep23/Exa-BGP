@@ -1,0 +1,49 @@
+name: Exabgp
+prefix: ""
+
+mgmt:
+  network: mgmt-net
+  mtu: 1500
+  ipv4-subnet: 172.50.50.0/24
+  ipv4-range: 172.50.50.128/25
+
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.31.3M
+
+  nodes:
+    lumen-pe:
+      kind: ceos
+      startup-config: configs/lumen-pe.cfg
+#      mgmt_ipv4: 172.50.50.130
+    verizon-pe:
+      kind: ceos
+      startup-config: configs/verizon-pe.cfg
+#      mgmt_ipv4: 172.50.50.131
+    internet: # ifconfig eth1 192.168.0.1 netmask 255.255.255.0 up
+      kind: linux
+      image: chpradeep23/exabgp-rt
+#      mgmt_ipv4: 172.50.50.132
+    dc4-lumen-rt:
+      kind: ceos
+      startup-config: configs/dc4-lumen-rt.cfg
+#      mgmt_ipv4: 172.50.50.133
+    dc4-verizon-rt:
+      kind: ceos
+      startup-config: configs/dc4-verizon-rt.cfg
+#      mgmt_ipv4: 172.50.50.134
+    inetexcng:
+      kind: ceos
+      startup-config: configs/inetexcng.cfg      
+#      mgmt_ipv4: 172.50.50.135
+
+  links:
+    - endpoints: ["inetexcng:eth1", "internet:eth1"]
+    - endpoints: ["inetexcng:eth2", "lumen-pe:eth2"]
+    - endpoints: ["inetexcng:eth3", "verizon-pe:eth3"]
+    - endpoints: ["lumen-pe:eth1", "dc4-lumen-rt:eth1"]
+    - endpoints: ["verizon-pe:eth1", "dc4-verizon-rt:eth1"]
+    - endpoints: ["dc4-lumen-rt:eth49_1", "dc4-verizon-rt:eth49_1"]
+    - endpoints: ["dc4-lumen-rt:eth56_1", "dc4-verizon-rt:eth56_1"]
+
