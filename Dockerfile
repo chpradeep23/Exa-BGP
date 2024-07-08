@@ -9,5 +9,5 @@ RUN pip install exabgp==4.2.22
 
 # Download latest version of Internet Routing table and delete when complete
 RUN wget https://data.ris.ripe.net/rrc16/latest-bview.gz
-RUN mrt2exabgp -G -P -4 172.16.2.1 latest-bview.gz > fullbgptable.py
+RUN mrt2exabgp -G -P -4 192.168.0.1 latest-bview.gz > fullbgptable.py
 RUN rm -rf latest-bview.gz
