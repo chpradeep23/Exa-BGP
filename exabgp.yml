@@ -21,7 +21,7 @@ topology:
       kind: ceos
       startup-config: configs/verizon-pe.cfg
 #      mgmt_ipv4: 172.50.50.131
-    internet: # ifconfig eth1 192.168.0.1 netmask 255.255.255.0 up
+    internet: # ifconfig eth1 192.168.0.1 netmask 255.255.255.224 up
       kind: linux
       image: chpradeep23/exabgp-rt
 #      mgmt_ipv4: 172.50.50.132
